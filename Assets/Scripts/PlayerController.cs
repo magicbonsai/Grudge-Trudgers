@@ -21,13 +21,18 @@ public class PlayerController : MonoBehaviour {
 
     Coroutine coFlash;
 
+    private void Awake()
+    {
+        lightning = transform.FindChild("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
+        lightning.enabled = false;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         isActive = true;
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        lightning = transform.FindChild("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
-        lightning.enabled = false;
+        
     }
 
     void FixedUpdate()
@@ -74,13 +79,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
 
     }
 
     void punishPlayer()
     {
-        
+
         int plusMinus = Random.Range(1, 6);
 
         if (ScoreBehavior.PlayerScores[playerNum - 1] > 7 + plusMinus)
@@ -94,20 +99,20 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            
+
             for (int i = 0; i < ScoreBehavior.PlayerScores[playerNum - 1]; i++)
             {
                 GameObject coin = Instantiate(Resources.Load("coin", typeof(GameObject)), transform.position + Vector3.up, Random.rotation) as GameObject;
             }
             ScoreBehavior.PlayerScores[playerNum - 1] = 0;
         }
-        
+
         rb.AddExplosionForce(5f, transform.position, 5.0f, 5.0f);
     }
 
     public void beAbsorbed()
     {
-        
+
         punishPlayer();
 
         transform.Translate(Vector3.down * 10f, Space.World);

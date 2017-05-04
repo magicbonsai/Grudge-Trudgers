@@ -142,7 +142,7 @@ public class BlobController : MonoBehaviour {
             }
 
             float angle = 30;
-            if (Vector3.Angle(target.transform.forward, transform.position - target.position) < angle && (transform.position - target.position).magnitude < 15f)
+            if (Vector3.Angle(target.transform.forward, transform.position - target.position) < angle && (transform.position - target.position).magnitude < 10f)
             {
                 numFacing++;
             }
